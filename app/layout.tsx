@@ -9,14 +9,14 @@ const _geistMono = Geist_Mono({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'ConnectSphere - Professional Networking & Collaboration',
-  description: 'Connect with friends and colleagues, share moments, and build your professional network on ConnectSphere.',
+  description: 'Connect with friends and colleagues, share moments',
   generator: 'v0.app',
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-    colorScheme: 'light'
-  },
+}
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
 }
 
 export default function RootLayout({

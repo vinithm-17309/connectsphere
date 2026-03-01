@@ -231,7 +231,8 @@ export function ProfilePage({ onClose }: ProfilePageProps) {
                       {post.caption}
                     </p>
                     <p className="text-xs text-muted-foreground mt-2">
-                      {formatDistanceToNow(post.createdAt, { addSuffix: true })}
+                     {post.timestamp &&
+  formatDistanceToNow(new Date(post.timestamp), { addSuffix: true })}
                     </p>
                   </div>
                 </Card>

@@ -1,7 +1,6 @@
 'use client'
 
 import React from "react"
-
 import { useState } from 'react'
 import { usePosts } from '@/lib/posts-context'
 import { useAuth } from '@/lib/auth-context'
@@ -14,8 +13,7 @@ import {
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
-import { Input } from '@/components/ui/input'
-import { Loader2, ImageIcon } from 'lucide-react'
+import { Loader2 } from 'lucide-react'
 
 interface NewPostDialogProps {
   open: boolean
@@ -54,6 +52,7 @@ export function NewPostDialog({ open, onOpenChange }: NewPostDialogProps) {
         comments: [],
         liked: false,
       })
+
       setCaption('')
       setImageUrl('')
       onOpenChange(false)
@@ -64,18 +63,26 @@ export function NewPostDialog({ open, onOpenChange }: NewPostDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md bg-background border border-border">
+      {/* ✅ FIXED DIALOG CONTENT */}
+      <DialogContent className="sm:max-w-md bg-background border border-border max-h-[85vh] overflow-y-auto flex flex-col">
+        
         <DialogHeader>
-          <DialogTitle className="text-foreground">Create a new post</DialogTitle>
+          <DialogTitle className="text-foreground">
+            Create a new post
+          </DialogTitle>
           <DialogDescription className="text-muted-foreground">
             Share insights and connect with your professional network
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4 flex-1">
+
           {/* Image Selection */}
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-foreground">Select an image</label>
+            <label className="text-sm font-semibold text-foreground">
+              Select an image
+            </label>
+
             <div className="grid grid-cols-3 gap-2">
               {SAMPLE_IMAGES.map((img, idx) => (
                 <button
@@ -84,28 +91,35 @@ export function NewPostDialog({ open, onOpenChange }: NewPostDialogProps) {
                   onClick={() => setImageUrl(img)}
                   className={`relative aspect-square rounded-lg overflow-hidden border-2 transition ${
                     imageUrl === img
-                      ? 'border-primary border-2'
+                      ? 'border-primary'
                       : 'border-border hover:border-primary/50'
                   }`}
                 >
                   <img
-                    src={img || "/placeholder.svg"}
+                    src={img}
                     alt={`Sample ${idx}`}
                     className="w-full h-full object-cover"
                   />
                 </button>
               ))}
             </div>
+
             {!imageUrl && (
-              <p className="text-xs text-muted-foreground">Click an image to select</p>
+              <p className="text-xs text-muted-foreground">
+                Click an image to select
+              </p>
             )}
           </div>
 
           {/* Caption */}
           <div className="space-y-2">
-            <label htmlFor="caption" className="text-sm font-semibold text-foreground">
+            <label
+              htmlFor="caption"
+              className="text-sm font-semibold text-foreground"
+            >
               Caption
             </label>
+
             <Textarea
               id="caption"
               placeholder="Write a caption for your post..."
@@ -119,15 +133,15 @@ export function NewPostDialog({ open, onOpenChange }: NewPostDialogProps) {
           {imageUrl && (
             <div className="border border-border rounded-lg overflow-hidden">
               <img
-                src={imageUrl || "/placeholder.svg"}
+                src={imageUrl}
                 alt="Preview"
                 className="w-full h-48 object-cover"
               />
             </div>
           )}
 
-          {/* Actions */}
-          <div className="flex gap-2 justify-end pt-4">
+          {/* ✅ FIXED ACTION BUTTONS */}
+          <div className="sticky bottom-0 bg-background flex gap-2 justify-end pt-4">
             <Button
               type="button"
               variant="outline"
@@ -136,6 +150,7 @@ export function NewPostDialog({ open, onOpenChange }: NewPostDialogProps) {
             >
               Cancel
             </Button>
+
             <Button
               type="submit"
               disabled={!caption.trim() || !imageUrl || loading}
@@ -151,6 +166,7 @@ export function NewPostDialog({ open, onOpenChange }: NewPostDialogProps) {
               )}
             </Button>
           </div>
+
         </form>
       </DialogContent>
     </Dialog>
